@@ -3,14 +3,15 @@ import path from "path";
 import fetch, { RequestInit, RequestInfo } from "node-fetch";
 
 export function getProxiedAgent(proxy?: string) {
-  if (proxy !== undefined) {
-    if (proxy.startsWith("unix://")) {
-      let socketPath = proxy.slice("unix://".length);
-      if (socketPath.startsWith("~/") && process.env.HOME !== undefined) {
-        socketPath = path.join(process.env.HOME, socketPath.slice(2));
-      }
-      return new Agent({ socketPath } as unknown as http.AgentOptions);
+  if (proxy !== undefined && !proxy.startsWith("http://") && !proxy.startsWith("https://")) {
+    let socketPath = proxy;
+    if (socketPath.startsWith("unix://")) {
+      socketPath = proxy.slice("unix://".length);
     }
+    if (socketPath.startsWith("~/") && process.env.HOME !== undefined) {
+      socketPath = path.join(process.env.HOME, socketPath.slice(2));
+    }
+    return new Agent({ socketPath } as unknown as http.AgentOptions);
   }
   return http.globalAgent;
 }
