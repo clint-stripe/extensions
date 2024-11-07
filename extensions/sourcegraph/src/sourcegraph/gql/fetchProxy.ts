@@ -2,7 +2,7 @@ import http, { Agent } from "http";
 import path from "path";
 import fetch, { RequestInit, RequestInfo } from "node-fetch";
 
-export function getProxyAgent(proxy?: string) {
+export function getProxiedAgent(proxy?: string) {
   if (proxy !== undefined) {
     if (proxy.startsWith("unix://")) {
       let socketPath = proxy.slice("unix://".length);
@@ -16,7 +16,7 @@ export function getProxyAgent(proxy?: string) {
 }
 
 export function getProxiedFetch(proxy?: string): typeof fetch {
-  const agent = getProxyAgent(proxy);
+  const agent = getProxiedAgent(proxy);
   return (info: URL | RequestInfo, init?: RequestInit) => {
     return fetch(info, { ...init, agent } as RequestInit);
   };

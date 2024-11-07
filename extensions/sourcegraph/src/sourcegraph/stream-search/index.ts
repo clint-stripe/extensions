@@ -2,8 +2,7 @@ import EventSource from "eventsource";
 
 import { getMatchUrl, SearchEvent, SearchMatch, AlertKind, LATEST_VERSION } from "./stream";
 import { LinkBuilder, Sourcegraph } from "..";
-import { createConnection } from "net";
-import { getProxyAgent } from "../gql/fetchProxy";
+import { getProxiedAgent } from "../gql/fetchProxy";
 
 export interface SearchResult {
   url: string;
@@ -70,7 +69,7 @@ export async function performSearch(
 
   const stream = new EventSource(requestURL, {
     headers,
-    agent: getProxyAgent(src.proxy),
+    agent: getProxiedAgent(src.proxy),
   } as unknown as EventSource.EventSourceInitDict);
   return new Promise((resolve) => {
     /**
