@@ -43,6 +43,13 @@
       "type": "password"
     },
     {
+      "name": "proxy",
+      "title": "Sourcegraph Instance: Proxy",
+      "description": "Optional proxy to use for connections to a custom Sourcegraph instance",
+      "required": false,
+      "type": "textfield"
+    },
+    {
       "name": "featureSearchPatternDropdown",
       "title": "Experimental features",
       "label": "Search pattern dropdown",
@@ -186,7 +193,8 @@
     "eventsource": "^2.0.2",
     "graphql": "^16.6.0",
     "luxon": "^3.1.1",
-    "nanoid": "^4.0.0"
+    "nanoid": "^4.0.0",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.16.1",

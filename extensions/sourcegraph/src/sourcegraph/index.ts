@@ -21,6 +21,11 @@ export interface Sourcegraph {
   client: ApolloClient<NormalizedCacheObject>;
 
   /**
+   * Address of the proxy server to use for requests to this instance.
+   */
+  proxy?: string;
+
+  /**
    * Feature flags for the extension.
    */
   featureFlags: ExtensionFeatureFlags;
@@ -55,6 +60,9 @@ interface Preferences {
   customInstanceToken?: string;
   customInstanceDefaultContext?: string;
 
+  // Proxy is applicable to requests against Sourcegraph.com and custom instances.
+  proxy?: string;
+
   // Feature flags
 
   featureSearchPatternDropdown?: boolean;
@@ -68,6 +76,7 @@ export function sourcegraphDotCom(): Sourcegraph {
   const connect = {
     instance: cloudURL,
     token: prefs.cloudToken,
+    proxy: prefs.proxy,
   };
   return {
     ...connect,
@@ -88,6 +97,7 @@ export function sourcegraphInstance(): Sourcegraph | null {
   const connect = {
     instance: prefs.customInstance.replace(/\/$/, ""),
     token: prefs.customInstanceToken,
+    proxy: prefs.proxy,
   };
   return {
     ...connect,

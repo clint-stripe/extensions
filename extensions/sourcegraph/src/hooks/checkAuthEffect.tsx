@@ -16,7 +16,8 @@ export default function checkAuthEffect(src: Sourcegraph) {
       try {
         if (src.token) {
           const controller = new AbortController();
-          await checkAuth(controller.signal, src);
+          const { currentUser } = await checkAuth(controller.signal, src);
+          console.log("Successfully authenticated as", currentUser.username);
         }
       } catch (err) {
         const helpText =
