@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 
 import { Sourcegraph } from "..";
-import getProxiedFetch from "./fetchProxy";
+import { getProxiedFetch } from "./fetchProxy";
 
 export class AuthError extends Error {
   message: string;
